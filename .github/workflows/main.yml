@@ -19,10 +19,10 @@ jobs:
         dotnet-version: '7.0.306'
 
     - name: Restore dependencies
-      run: dotnet restore test/Auth.Test
+      run: dotnet restore test/Restaurant.Test
 
     - name: Run tests
-      run: dotnet test --configuration Release test/Auth.Test
+      run: dotnet test --configuration Release test/Restaurant.Test
 
     - name: Build and run Docker Compose
       run: |
