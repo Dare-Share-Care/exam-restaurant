@@ -1,0 +1,17 @@
+﻿version: '3.8'
+
+services:
+  mtogo.auth:
+    container_name: mtogo-restaurant
+    image: mtogo.restaurant
+    build:
+      context: .
+      dockerfile: src/Restaurant.Web/Dockerfile
+    ports:
+      - "8081:80"
+    networks:
+      - kafka
+
+networks:
+  kafka:
+    external: true
