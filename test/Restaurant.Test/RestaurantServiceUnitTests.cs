@@ -1,3 +1,5 @@
+
+
 using Ardalis.Specification;
 using Moq;
 using Restaurant.Web.Entities;
@@ -28,8 +30,8 @@ namespace Restaurant.Test
             //Arrange
             var restaurantsResult = new List<Restauranten>
             {
-                new() { Id = 1, Name = "Restaurant 1", Address = "Address 1", Zipcode = 1234},
-                new() { Id = 2, Name = "Restaurant 2", Address = "Address 2", Zipcode = 1234},
+                new() { Id = 1, Name = "Restaurant 1", Address = "Address 1", Zipcode = 1234 },
+                new() { Id = 2, Name = "Restaurant 2", Address = "Address 2", Zipcode = 1234 },
                 new() { Id = 3, Name = "Restaurant 3", Address = "Address 3", Zipcode = 1234 }
             };
 
@@ -216,5 +218,54 @@ namespace Restaurant.Test
             await Assert.ThrowsAsync<RestaurantException>(() =>
                 _restaurantService.RemoveMenuItemAsync(restaurantId, menuItemId));
         }
+
+
+        [Fact]
+        public async Task UpdateMenuItemAsync_ShouldUpdateMenuItem_WhenMenuItemExists()
+        {
+            // Arrange
+            const long restaurantId = 1;
+            const long menuItemId = 1;
+
+            var restaurant = new Restauranten
+            {
+                Id = restaurantId,
+                Name = "Restaurant 1",
+                Menu =
+                {
+                    new MenuItem { Id = menuItemId, Name = "MenuItem 1", Price = 10, Description = "Original Description" },
+                    new MenuItem { Id = 2, Name = "MenuItem 2", Price = 20 },
+                    new MenuItem { Id = 3, Name = "MenuItem 3", Price = 30 }
+                }
+            };
+
+            var updateMenuItemDto = new CreateMenuItemDto
+            {
+                Name = "Updated Item",
+                Price = 12.99m,
+                Description = "Updated Description"
+            };
+
+            _repoMock.Setup(x =>
+                    x.FirstOrDefaultAsync(It.IsAny<ISpecification<Restauranten>>(), new CancellationToken()))
+                .ReturnsAsync(restaurant);
+            
+            // Act
+            var updatedMenuItem =
+                await _restaurantService.UpdateMenuItemAsync(restaurantId, menuItemId, updateMenuItemDto);
+
+            // Assert
+            Assert.NotNull(updatedMenuItem);
+            Assert.Equal(updateMenuItemDto.Name, updatedMenuItem.Name);
+            Assert.Equal(updateMenuItemDto.Price, updatedMenuItem.Price);
+            Assert.Equal(updateMenuItemDto.Description, updatedMenuItem.Description);
+
+            // Check that the restaurant and menu item are updated in-memory
+            Assert.Equal(updateMenuItemDto.Name, restaurant.Menu.First(x => x.Id == menuItemId).Name);
+            Assert.Equal(updateMenuItemDto.Price, restaurant.Menu.First(x => x.Id == menuItemId).Price);
+            Assert.Equal(updateMenuItemDto.Description, restaurant.Menu.First(x => x.Id == menuItemId).Description);
+        }
+
+
     }
 }
