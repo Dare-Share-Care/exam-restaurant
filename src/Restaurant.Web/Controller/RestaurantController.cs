@@ -37,12 +37,13 @@ namespace Restaurant.Web.Controller;
             return Ok(menu);
         }
 
-        [HttpPost("create-restaurant/{restaurantId}")]
-        public async Task<IActionResult> CreateRestaurant([FromBody] string name)
+        [HttpPost("create-restaurant")]
+        public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantDto request)
         {
-            var restaurant = await _restaurantService.CreateRestaurantAsync(name);
+            var restaurant = await _restaurantService.CreateRestaurantAsync(request.Name, request.Address, request.Zipcode);
             return Ok(restaurant);
         }
+
 
         [HttpPost("add-menuitem/{restaurantId}")]
         public async Task<IActionResult> AddMenuItem(long restaurantId, [FromBody] CreateMenuItemDto dto)
@@ -52,10 +53,11 @@ namespace Restaurant.Web.Controller;
         }
 
         [HttpDelete("remove-menuitem/{restaurantId}")]
-        public async Task<IActionResult> RemoveMenuItem(long restaurantId, [FromBody] long menuItemId)
+        public async Task<IActionResult> RemoveMenuItem(long restaurantId, long menuItemId)
         {
             var restaurant = await _restaurantService.RemoveMenuItemAsync(restaurantId, menuItemId);
             return Ok(restaurant);
         }
+
         
 }
