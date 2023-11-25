@@ -63,7 +63,7 @@ public class RestaurantControllerApiTests : IClassFixture<CustomWebApplicationFa
     var menuItemContent = new StringContent(menuItemJson, Encoding.UTF8, "application/json");
 
     // Act
-    var response = await client.PostAsync($"/api/restaurant/add-menuitem/{restaurantId}", menuItemContent);
+    var response = await client.PostAsync($"/api/restaurant/create-menuitem/{restaurantId}", menuItemContent);
 
     // Assert
     response.EnsureSuccessStatusCode(); // Status Code 200-299
@@ -116,7 +116,7 @@ public async Task RemoveMenuItemEndpoint_ReturnsSuccessStatusCode()
     var menuItemJson = JsonSerializer.Serialize(menuItemDto);
     var menuItemContent = new StringContent(menuItemJson, Encoding.UTF8, "application/json");
 
-    var addMenuItemResponse = await client.PostAsync($"/api/restaurant/add-menuitem/{restaurantId}", menuItemContent);
+    var addMenuItemResponse = await client.PostAsync($"/api/restaurant/create-menuitem/{restaurantId}", menuItemContent);
     addMenuItemResponse.EnsureSuccessStatusCode();
 
     // Act

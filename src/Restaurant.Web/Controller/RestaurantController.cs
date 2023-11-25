@@ -45,7 +45,7 @@ namespace Restaurant.Web.Controller;
         }
 
 
-        [HttpPost("add-menuitem/{restaurantId}")]
+        [HttpPost("create-menuitem/{restaurantId}")]
         public async Task<IActionResult> AddMenuItem(long restaurantId, [FromBody] CreateMenuItemDto dto)
         {
             var restaurant = await _restaurantService.AddMenuItemAsync(restaurantId, dto);
