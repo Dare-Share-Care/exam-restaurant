@@ -63,7 +63,7 @@ namespace Restaurant.Test
                 .ReturnsAsync(restaurant);
 
             //Act
-            var restaurantCreated = await _restaurantService.CreateRestaurantAsync(restaurantName);
+            var restaurantCreated = await _restaurantService.CreateRestaurantAsync(restaurantName, "Address 1", 1234);
 
             //Assert
             Assert.Equal(restaurantName, restaurantCreated.Name);

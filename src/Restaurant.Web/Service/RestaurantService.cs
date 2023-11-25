@@ -1,4 +1,5 @@
-﻿using Restaurant.Web.Entities;
+﻿using System.Data.Common;
+using Restaurant.Web.Entities;
 using Restaurant.Web.Exceptions;
 using Restaurant.Web.Interface.DomainServices;
 using Restaurant.Web.Interface.Repositories;
@@ -19,17 +20,24 @@ public class RestaurantService : IRestaurantService
         _restaurantRepository = restaurantRepository;
     }
     
-     public async Task<RestaurantDto> CreateRestaurantAsync(string name)
+    public async Task<CreateRestaurantDto> CreateRestaurantAsync(string name, string address, int zipcode)
     {
-        var createdRestaurant = await _restaurantRepository.AddAsync(new Restauranten { Name = name });
-
-        var restaurantDto = new RestaurantDto
+        var createdRestaurant = await _restaurantRepository.AddAsync(new Restauranten
         {
-            Id = createdRestaurant.Id,
-            Name = createdRestaurant.Name
+            Name = name,
+            Address = address,
+            Zipcode = zipcode
+        }); 
+
+        var restaurantDto = new CreateRestaurantDto()
+        {
+            Name = createdRestaurant.Name,
+            Address = createdRestaurant.Address,
+            Zipcode = createdRestaurant.Zipcode
         };
         return restaurantDto;
     }
+
 
     public async Task<List<MenuItemDto>> GetRestaurantMenuAsync(long restaurantId)
     {
