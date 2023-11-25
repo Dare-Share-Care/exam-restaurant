@@ -7,6 +7,11 @@ using Restaurant.Web.Data;
 using Restaurant.Web.Entities;
 using Restaurant.Web.models.Dto;
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
+using Moq;
+using Restaurant.Web.Controller;
+using Restaurant.Web.Exceptions;
+using Restaurant.Web.Interface.DomainServices;
 
 namespace Restaurant.Test;
 
@@ -138,7 +143,5 @@ public async Task RemoveMenuItemEndpoint_ReturnsSuccessStatusCode()
     // Assert that the restaurant exists and has no menu items
     Assert.NotNull(updatedRestaurant);
     Assert.Empty(updatedRestaurant.Menu);
-}
-
-
+    }
 }

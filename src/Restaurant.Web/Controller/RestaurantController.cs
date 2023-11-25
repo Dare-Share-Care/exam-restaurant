@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Restaurant.Web.Exceptions;
 using Restaurant.Web.models.Dto;
 using Restaurant.Web.Interface.DomainServices;
 
@@ -59,5 +60,18 @@ namespace Restaurant.Web.Controller;
             return Ok(restaurant);
         }
 
-        
+        [HttpPut("update-menuitem/{restaurantId}/{menuItemId}")]
+        public async Task<IActionResult> UpdateMenuItem(long restaurantId, long menuItemId, [FromBody] CreateMenuItemDto dto)
+        {
+            try
+            {
+                var updatedMenuItem = await _restaurantService.UpdateMenuItemAsync(restaurantId, menuItemId, dto);
+                return Ok(updatedMenuItem);
+            }
+            catch (RestaurantException ex)
+            {
+                return BadRequest(new { ErrorMessage = ex.Message });
+            }
+        }
+
 }
