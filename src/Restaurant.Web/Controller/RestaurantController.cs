@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Restaurant.Web.Exceptions;
 using Restaurant.Web.models.Dto;
 using Restaurant.Web.Interface.DomainServices;
@@ -47,19 +48,22 @@ namespace Restaurant.Web.Controller;
 
 
         [HttpPost("create-menuitem/{restaurantId}")]
+        [Authorize(Roles = "RestaurantOwner")]
         public async Task<IActionResult> AddMenuItem(long restaurantId, [FromBody] CreateMenuItemDto dto)
         {
             var restaurant = await _restaurantService.AddMenuItemAsync(restaurantId, dto);
             return Ok(restaurant);
         }
-
+        
+        [Authorize(Roles = "RestaurantOwner")]
         [HttpDelete("remove-menuitem/{restaurantId}")]
         public async Task<IActionResult> RemoveMenuItem(long restaurantId, long menuItemId)
         {
             var restaurant = await _restaurantService.RemoveMenuItemAsync(restaurantId, menuItemId);
             return Ok(restaurant);
         }
-
+        
+        [Authorize(Roles = "RestaurantOwner")]
         [HttpPut("update-menuitem/{restaurantId}/{menuItemId}")]
         public async Task<IActionResult> UpdateMenuItem(long restaurantId, long menuItemId, [FromBody] CreateMenuItemDto dto)
         {
