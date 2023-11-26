@@ -4,6 +4,7 @@ using Restaurant.Web.Exceptions;
 using Restaurant.Web.Interface.DomainServices;
 using Restaurant.Web.Interface.Repositories;
 using Restaurant.Web.models.Dto;
+using Restaurant.Web.Models.ViewModels;
 using Restaurant.Web.Specifications;
 
 namespace Restaurant.Web.Service;
@@ -20,17 +21,18 @@ public class RestaurantService : IRestaurantService
         _restaurantRepository = restaurantRepository;
     }
 
-    public async Task<CreateRestaurantDto> CreateRestaurantAsync(string name, string address, int zipcode)
+    public async Task<RestaurantViewModel> CreateRestaurantAsync(CreateRestaurantDto dto)
     {
         var createdRestaurant = await _restaurantRepository.AddAsync(new Restauranten
         {
-            Name = name,
-            Address = address,
-            Zipcode = zipcode
+            Name = dto.Name,
+            Address = dto.Address,
+            Zipcode = dto.Zipcode
         });
 
-        var restaurantDto = new CreateRestaurantDto()
+        var restaurantDto = new RestaurantViewModel()
         {
+            Id = createdRestaurant.Id,
             Name = createdRestaurant.Name,
             Address = createdRestaurant.Address,
             Zipcode = createdRestaurant.Zipcode

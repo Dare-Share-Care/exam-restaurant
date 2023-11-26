@@ -29,18 +29,7 @@ public class RestaurantContext : DbContext
         modelBuilder.Entity<MenuItem>()
             .Property(p => p.Price).HasColumnType("decimal(18,2)");
         
-        // Set Seed Data
-        modelBuilder.Entity<Restauranten>().HasData(
-            new Restauranten{Id = 1, Name = "McDorra", Address = "Cool kid street", Zipcode = 42069}
-            );
-
-        // Set Seed Data
-        modelBuilder.Entity<MenuItem>().HasData(
-            new MenuItem { Id = 1, RestaurantId = 1, Name = "Apple", Price = 1.99m, Description = "Green and from trees"},
-            new MenuItem { Id = 2, RestaurantId = 1,Name = "Banana", Price = 2.99m, Description = "Green and from trees" },
-            new MenuItem { Id = 3, RestaurantId = 1,Name = "Orange", Price = 3.99m, Description = "Green and from trees" }
-        );
-        
+     
     }
     
     

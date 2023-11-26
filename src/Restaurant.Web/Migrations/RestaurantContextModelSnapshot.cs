@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Restaurant.Web.Data;
 
@@ -11,11 +10,9 @@ using Restaurant.Web.Data;
 namespace Restaurant.Web.Migrations
 {
     [DbContext(typeof(RestaurantContext))]
-    [Migration("20231124203621_Second")]
-    partial class Second
+    partial class RestaurantContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,32 +48,6 @@ namespace Restaurant.Web.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("MenuItems");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Description = "Green and from trees",
-                            Name = "Apple",
-                            Price = 1.99m,
-                            RestaurantId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Description = "Green and from trees",
-                            Name = "Banana",
-                            Price = 2.99m,
-                            RestaurantId = 1L
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Description = "Green and from trees",
-                            Name = "Orange",
-                            Price = 3.99m,
-                            RestaurantId = 1L
-                        });
                 });
 
             modelBuilder.Entity("Restaurant.Web.Entities.Restauranten", b =>
@@ -101,15 +72,6 @@ namespace Restaurant.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Restaurant");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Address = "Cool kid street",
-                            Name = "McDorra",
-                            Zipcode = 42069
-                        });
                 });
 
             modelBuilder.Entity("Restaurant.Web.Entities.MenuItem", b =>

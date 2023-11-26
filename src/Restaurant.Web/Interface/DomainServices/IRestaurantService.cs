@@ -1,10 +1,11 @@
 ﻿using Restaurant.Web.models.Dto;
+using Restaurant.Web.Models.ViewModels;
 
 namespace Restaurant.Web.Interface.DomainServices;
 
 public interface IRestaurantService
 {
-     Task<CreateRestaurantDto> CreateRestaurantAsync(string name, string address, int zipcode);
+     Task<RestaurantViewModel> CreateRestaurantAsync(CreateRestaurantDto dto);
      Task<List<MenuItemDto>> GetRestaurantMenuAsync(long restaurantId);
      Task<RestaurantDto> AddMenuItemAsync(long restaurantId, CreateMenuItemDto dto);
      Task<RestaurantDto> RemoveMenuItemAsync(long restaurantId, long menuItemId);

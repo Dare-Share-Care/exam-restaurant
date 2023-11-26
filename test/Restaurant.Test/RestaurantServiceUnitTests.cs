@@ -57,6 +57,7 @@ namespace Restaurant.Test
         public async Task CreateRestaurantAsync_ShouldCreateRestaurant()
         {
             //Arrange
+            var dto = new CreateRestaurantDto{ Name = "Restaurant 1", Address = "Address 1", Zipcode = 1234};
             const string restaurantName = "Restaurant 1";
             var restaurant = new Restauranten { Id = 1, Name = restaurantName };
 
@@ -65,7 +66,7 @@ namespace Restaurant.Test
                 .ReturnsAsync(restaurant);
 
             //Act
-            var restaurantCreated = await _restaurantService.CreateRestaurantAsync(restaurantName, "Address 1", 1234);
+            var restaurantCreated = await _restaurantService.CreateRestaurantAsync(dto);
 
             //Assert
             Assert.Equal(restaurantName, restaurantCreated.Name);

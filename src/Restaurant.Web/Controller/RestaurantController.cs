@@ -39,9 +39,9 @@ namespace Restaurant.Web.Controller;
         }
 
         [HttpPost("create-restaurant")]
-        public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantDto request)
+        public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantDto dto)
         {
-            var restaurant = await _restaurantService.CreateRestaurantAsync(request.Name, request.Address, request.Zipcode);
+            var restaurant = await _restaurantService.CreateRestaurantAsync(dto);
             return Ok(restaurant);
         }
 

@@ -2,8 +2,6 @@
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace Restaurant.Web.Migrations
 {
     /// <inheritdoc />
@@ -47,21 +45,6 @@ namespace Restaurant.Web.Migrations
                         principalTable: "Restaurant",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "Restaurant",
-                columns: new[] { "Id", "Address", "Name", "Zipcode" },
-                values: new object[] { 1L, "Cool kid street", "McDorra", 42069 });
-
-            migrationBuilder.InsertData(
-                table: "MenuItems",
-                columns: new[] { "Id", "Description", "Name", "Price", "RestaurantId" },
-                values: new object[,]
-                {
-                    { 1L, "Green and from trees", "Apple", 1.99m, 1L },
-                    { 2L, "Green and from trees", "Banana", 2.99m, 1L },
-                    { 3L, "Green and from trees", "Orange", 3.99m, 1L }
                 });
 
             migrationBuilder.CreateIndex(
