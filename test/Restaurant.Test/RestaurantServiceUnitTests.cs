@@ -1,13 +1,11 @@
-
-
 using Ardalis.Specification;
 using Moq;
-using Restaurant.Web.Entities;
-using Restaurant.Web.Exceptions;
-using Restaurant.Web.Interface.DomainServices;
-using Restaurant.Web.Interface.Repositories;
-using Restaurant.Web.models.Dto;
-using Restaurant.Web.Service;
+using Restaurant.Core.Exceptions;
+using Restaurant.Core.Interfaces;
+using Restaurant.Core.Models.Dto;
+using Restaurant.Core.Services;
+using Restaurant.Infrastructure.Entities;
+using Restaurant.Infrastructure.Interfaces;
 
 namespace Restaurant.Test
 {

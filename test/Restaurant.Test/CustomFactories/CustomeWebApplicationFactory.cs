@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Restaurant.Web.Data;
+using Restaurant.Infrastructure.Data;
 
 namespace Restaurant.Test.CustomFactories;
 

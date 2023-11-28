@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Restaurant.Web.Exceptions;
-using Restaurant.Web.models.Dto;
-using Restaurant.Web.Interface.DomainServices;
+using Restaurant.Core.Exceptions;
+using Restaurant.Core.Interfaces;
+using Restaurant.Core.Models.Dto;
 
 namespace Restaurant.Web.Controller;
 

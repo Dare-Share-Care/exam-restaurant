@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Restaurant.Web.Data;
-using Restaurant.Web.Entities;
-using Restaurant.Web.Interface.DomainServices;
-using Restaurant.Web.Interface.Repositories;
-using Restaurant.Web.Migrations;
-using Restaurant.Web.models.Dto;
-using Restaurant.Web.Service;
+using Restaurant.Core.Interfaces;
+using Restaurant.Core.Models.Dto;
+using Restaurant.Core.Services;
+using Restaurant.Infrastructure.Data;
+using Restaurant.Infrastructure.Entities;
+using Restaurant.Infrastructure.Interfaces;
 
 namespace Restaurant.Test
 {

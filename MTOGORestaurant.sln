@@ -9,7 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Grpc", "Restaurant.Grpc\Restaurant.Grpc.csproj", "{FF457560-6F3B-481E-8149-AA92E4852ACF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Grpc", "src\Restaurant.Grpc\Restaurant.Grpc.csproj", "{FF457560-6F3B-481E-8149-AA92E4852ACF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Core", "src\Restaurant.Core\Restaurant.Core.csproj", "{0B403063-D70E-4D43-8385-5AA2C13592D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Infrastructure", "src\Restaurant.Infrastructure\Restaurant.Infrastructure.csproj", "{FEBB94D6-69E3-493D-A33C-87DD497A989D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,5 +33,13 @@ Global
 		{FF457560-6F3B-481E-8149-AA92E4852ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF457560-6F3B-481E-8149-AA92E4852ACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF457560-6F3B-481E-8149-AA92E4852ACF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B403063-D70E-4D43-8385-5AA2C13592D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B403063-D70E-4D43-8385-5AA2C13592D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B403063-D70E-4D43-8385-5AA2C13592D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B403063-D70E-4D43-8385-5AA2C13592D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEBB94D6-69E3-493D-A33C-87DD497A989D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEBB94D6-69E3-493D-A33C-87DD497A989D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEBB94D6-69E3-493D-A33C-87DD497A989D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEBB94D6-69E3-493D-A33C-87DD497A989D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
