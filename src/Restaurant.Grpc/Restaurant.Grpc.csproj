@@ -20,5 +20,10 @@
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.49.0"/>
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Restaurant.Core\Restaurant.Core.csproj" />
+      <ProjectReference Include="..\Restaurant.Infrastructure\Restaurant.Infrastructure.csproj" />
+    </ItemGroup>
     
 </Project>
