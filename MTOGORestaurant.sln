@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Grpc", "Restaurant.Grpc\Restaurant.Grpc.csproj", "{FF457560-6F3B-481E-8149-AA92E4852ACF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +25,9 @@ Global
 		{950444E2-3FDC-4DE7-89FA-EDEC9C094469}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{950444E2-3FDC-4DE7-89FA-EDEC9C094469}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{950444E2-3FDC-4DE7-89FA-EDEC9C094469}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF457560-6F3B-481E-8149-AA92E4852ACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF457560-6F3B-481E-8149-AA92E4852ACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF457560-6F3B-481E-8149-AA92E4852ACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF457560-6F3B-481E-8149-AA92E4852ACF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
