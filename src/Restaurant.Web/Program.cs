@@ -2,11 +2,10 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Restaurant.Web.Data;
-using Restaurant.Web.Interface.DomainServices;
-using Restaurant.Web.Interface.Repositories;
-using Restaurant.Web.Migrations;
-using Restaurant.Web.Service;
+using Restaurant.Core.Interfaces;
+using Restaurant.Core.Services;
+using Restaurant.Infrastructure.Data;
+using Restaurant.Infrastructure.Interfaces;
 
 const string policyName = "AllowOrigin";
 var builder = WebApplication.CreateBuilder(args);
