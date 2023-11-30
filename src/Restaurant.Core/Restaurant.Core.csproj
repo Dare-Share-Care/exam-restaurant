@@ -14,4 +14,9 @@
       <ProjectReference Include="..\Restaurant.Infrastructure\Restaurant.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="HotChocolate" Version="14.0.0-p.15" />
+      <PackageReference Include="HotChocolate.AspNetCore" Version="14.0.0-p.15" />
+    </ItemGroup>
+
 </Project>

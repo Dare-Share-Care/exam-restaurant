@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Restaurant.Core.Interfaces;
+using Restaurant.Core.Models.ViewModels;
 using Restaurant.Core.Services;
+using Restaurant.Core.Types;
 using Restaurant.Infrastructure.Data;
 using Restaurant.Infrastructure.Interfaces;
 
@@ -62,6 +64,12 @@ builder.Services.AddAuthorization(options =>
     // Add more policies for other roles as needed
 });
 
+//graphql
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<QueryType>();
+
+
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseSwagger();
@@ -72,6 +80,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGraphQL("/graphql");
 
 app.Run();
 
