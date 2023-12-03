@@ -86,16 +86,16 @@ namespace Restaurant.Test.Features
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Add two numbers")]
+        [Xunit.SkippableFactAttribute(DisplayName="Restaurant owner adds a new menu item")]
         [Xunit.TraitAttribute("FeatureTitle", "CreateMenuItem")]
-        [Xunit.TraitAttribute("Description", "Add two numbers")]
+        [Xunit.TraitAttribute("Description", "Restaurant owner adds a new menu item")]
         [Xunit.TraitAttribute("Category", "CreateMenuItem")]
-        public async System.Threading.Tasks.Task AddTwoNumbers()
+        public async System.Threading.Tasks.Task RestaurantOwnerAddsANewMenuItem()
         {
             string[] tagsOfScenario = new string[] {
                     "CreateMenuItem"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Add two numbers", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Restaurant owner adds a new menu item", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

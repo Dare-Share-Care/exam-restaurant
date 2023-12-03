@@ -2,7 +2,7 @@
 	Function to add menu item to the restaurant menu
 
 @CreateMenuItem
-Scenario: Add two numbers
+Scenario: Restaurant owner adds a new menu item
 	Given a restaurant owner is logged into the system
 	And a restaurant already exists in the system
 	When the owner creates a new menu item,
