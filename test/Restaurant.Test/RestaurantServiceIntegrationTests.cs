@@ -21,6 +21,7 @@ namespace Restaurant.Test
                 .AddScoped<IRepository<Restauranten>, EfRepository<Restauranten>>()
                 .AddScoped<IRestaurantService, RestaurantService>()
                 .AddScoped<IReadRepository<Restauranten>, EfRepository<Restauranten>>()
+                .AddScoped<ILoggingService, LoggingService>()
                 .BuildServiceProvider();
 
             _dbContext = _serviceProvider.GetRequiredService<RestaurantContext>();
