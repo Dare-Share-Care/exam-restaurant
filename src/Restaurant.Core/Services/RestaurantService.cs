@@ -14,14 +14,15 @@ public class RestaurantService : IRestaurantService
 {
     private readonly IReadRepository<Restauranten> _restaurantReadRepository;
     private readonly IRepository<Restauranten> _restaurantRepository;
-    private readonly ILogger _logger;
+    private readonly ILoggingService _logger;
 
-    public RestaurantService(IReadRepository<Restauranten> restaurantReadRepository, IRepository<Restauranten> restaurantRepository, ILogger<Restauranten> logger)
+    public RestaurantService(IReadRepository<Restauranten> restaurantReadRepository, IRepository<Restauranten> restaurantRepository, ILoggingService logger)
     {
         _restaurantReadRepository = restaurantReadRepository;
         _restaurantRepository = restaurantRepository;
         _logger = logger;
     }
+  
 
     public async Task<RestaurantViewModel> CreateRestaurantAsync(CreateRestaurantDto dto)
     {
@@ -172,38 +173,13 @@ public class RestaurantService : IRestaurantService
         }
         catch (Exception e)
         {
-            _logger.LogError("Something went wrong when getting all restaurants: {0}", e.Message);
-
-            // Log to a text file
-            LogToFile($"Error: {e.Message}\nStackTrace: {e.StackTrace}");
-
+            
+            _logger.LogToFile($"Error: {e.Message}\nStackTrace: {e.StackTrace}");
             throw;
         }
     }
 
-    private void LogToFile(string logMessage)
-    {
-        try
-        {
-            // Specify your log file path
-            string logFilePath = "logs/logfile.txt";
-            
-            // Ensure the directory exists before logging
-            string logDirectory = Path.GetDirectoryName(logFilePath);
-            if (!Directory.Exists(logDirectory))
-            {
-                Directory.CreateDirectory(logDirectory);
-            }
-            
-            // Append the log message to the file
-            File.AppendAllText(logFilePath, $"{DateTime.Now}: {logMessage}\n");
-        }
-        catch (Exception ex)
-        {
-            // Log any exceptions that occur during file logging
-            _logger.LogError("Error logging to file: {0}", ex.Message);
-        }
-    }
+    
 
     public async Task<CreateMenuItemDto> UpdateMenuItemAsync(long restaurantId, long menuItemId, CreateMenuItemDto dto)
     {

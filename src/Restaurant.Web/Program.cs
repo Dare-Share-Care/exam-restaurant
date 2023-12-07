@@ -28,10 +28,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-//ILogger
-builder.Services.AddLogging();
-
-
 
 
 //DBContext
@@ -42,10 +38,14 @@ builder.Services.AddDbContext<RestaurantContext>(options =>
 
 //Build services
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+builder.Services.AddScoped<ILoggingService, LoggingService>();
 
 //Build repositories
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+
+//ILogger
+builder.Services.AddLogging();
 
 // JWT Configuration
 var key = Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!);
