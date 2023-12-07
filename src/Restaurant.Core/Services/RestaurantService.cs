@@ -1,10 +1,12 @@
-﻿using Restaurant.Core.Interfaces;
+﻿using Microsoft.Extensions.Logging;
+using Restaurant.Core.Interfaces;
 using Restaurant.Core.Models.Dto;
 using Restaurant.Core.Models.ViewModels;
 using Restaurant.Core.Exceptions;
 using Restaurant.Infrastructure.Entities;
 using Restaurant.Infrastructure.Interfaces;
 using Restaurant.Infrastructure.Specifications;
+using Path = System.IO.Path;
 
 namespace Restaurant.Core.Services;
 
@@ -12,12 +14,13 @@ public class RestaurantService : IRestaurantService
 {
     private readonly IReadRepository<Restauranten> _restaurantReadRepository;
     private readonly IRepository<Restauranten> _restaurantRepository;
+    private readonly ILogger _logger;
 
-    public RestaurantService(IReadRepository<Restauranten> restaurantReadRepository,
-        IRepository<Restauranten> restaurantRepository)
+    public RestaurantService(IReadRepository<Restauranten> restaurantReadRepository, IRepository<Restauranten> restaurantRepository, ILogger<Restauranten> logger)
     {
         _restaurantReadRepository = restaurantReadRepository;
         _restaurantRepository = restaurantRepository;
+        _logger = logger;
     }
 
     public async Task<RestaurantViewModel> CreateRestaurantAsync(CreateRestaurantDto dto)
@@ -151,18 +154,56 @@ public class RestaurantService : IRestaurantService
 
     public async Task<List<RestaurantDto>> GetAllRestaurantsAsync()
     {
-        var restaurants = await _restaurantReadRepository.ListAsync();
-        var restaurantDtos = restaurants.Select(restaurant => new RestaurantDto
+        try
         {
-            Id = restaurant.Id,
-            Name = restaurant.Name,
-            Address = restaurant.Address,
-            Zipcode = restaurant.Zipcode,
-        }).ToList();
+            
+            throw new ("This msg is on purpose");
+            var restaurants = await _restaurantReadRepository.ListAsync();
+            var restaurantDtos = restaurants.Select(restaurant => new RestaurantDto
+            {
+                Id = restaurant.Id,
+                Name = restaurant.Name,
+                Address = restaurant.Address,
+                Zipcode = restaurant.Zipcode,
+            }).ToList();
 
-        return restaurantDtos;
+
+            return restaurantDtos;
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Something went wrong when getting all restaurants: {0}", e.Message);
+
+            // Log to a text file
+            LogToFile($"Error: {e.Message}\nStackTrace: {e.StackTrace}");
+
+            throw;
+        }
     }
 
+    private void LogToFile(string logMessage)
+    {
+        try
+        {
+            // Specify your log file path
+            string logFilePath = "logs/logfile.txt";
+            
+            // Ensure the directory exists before logging
+            string logDirectory = Path.GetDirectoryName(logFilePath);
+            if (!Directory.Exists(logDirectory))
+            {
+                Directory.CreateDirectory(logDirectory);
+            }
+            
+            // Append the log message to the file
+            File.AppendAllText(logFilePath, $"{DateTime.Now}: {logMessage}\n");
+        }
+        catch (Exception ex)
+        {
+            // Log any exceptions that occur during file logging
+            _logger.LogError("Error logging to file: {0}", ex.Message);
+        }
+    }
 
     public async Task<CreateMenuItemDto> UpdateMenuItemAsync(long restaurantId, long menuItemId, CreateMenuItemDto dto)
     {

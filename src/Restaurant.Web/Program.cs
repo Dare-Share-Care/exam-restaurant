@@ -28,6 +28,11 @@ builder.Services.AddCors(options =>
         });
 });
 
+//ILogger
+builder.Services.AddLogging();
+
+
+
 
 //DBContext
 builder.Services.AddDbContext<RestaurantContext>(options =>
