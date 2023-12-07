@@ -174,7 +174,8 @@ public class RestaurantService : IRestaurantService
         catch (Exception e)
         {
             
-            _logger.LogToFile($"Error: {e.Message}\nStackTrace: {e.StackTrace}");
+            _logger.LogError(e.Message);
+            _logger.LogUnauthorizedAttempt(e.Message);
             throw;
         }
     }

@@ -5,19 +5,31 @@ namespace Restaurant.Core.Services;
 
 public class LoggingService : ILoggingService
 {
-    public void LogToFile(string logMessage)
+   
+
+    public void LogError(string logMessage)
+    {
+        LogToFile("errorlog.txt", logMessage);
+    }
+
+    public void LogUnauthorizedAttempt(string logMessage)
+    {
+        LogToFile("unauthorizedlog.txt", logMessage);
+    }
+
+    public void LogToFile(string fileName, string logMessage)
     {
         try
         {
-            string logFilePath = "logs/logfile.txt";
-            
+            string logFilePath = Path.Combine("logs", fileName);
+
             // Ensure the directory exists before logging
             string? logDirectory = Path.GetDirectoryName(logFilePath);
             if (!Directory.Exists(logDirectory))
             {
                 Directory.CreateDirectory(logDirectory);
             }
-            
+
             File.AppendAllText(logFilePath, $"{DateTime.Now}: {logMessage}\n");
         }
         catch (Exception ex)
@@ -25,6 +37,7 @@ public class LoggingService : ILoggingService
             Console.Write(ex.Message);
         }
     }
+
     
    
     
