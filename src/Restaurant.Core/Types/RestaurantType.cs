@@ -1,5 +1,4 @@
-﻿using HotChocolate.Types;
-using Restaurant.Infrastructure.Entities;
+﻿using Restaurant.Infrastructure.Entities;
 
 namespace Restaurant.Core.Types
 {

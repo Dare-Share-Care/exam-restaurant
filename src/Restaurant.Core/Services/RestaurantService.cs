@@ -6,7 +6,6 @@ using Restaurant.Core.Exceptions;
 using Restaurant.Infrastructure.Entities;
 using Restaurant.Infrastructure.Interfaces;
 using Restaurant.Infrastructure.Specifications;
-using Path = System.IO.Path;
 
 namespace Restaurant.Core.Services;
 
@@ -158,7 +157,6 @@ public class RestaurantService : IRestaurantService
         try
         {
             
-            throw new ("This msg is on purpose");
             var restaurants = await _restaurantReadRepository.ListAsync();
             var restaurantDtos = restaurants.Select(restaurant => new RestaurantDto
             {
@@ -171,11 +169,19 @@ public class RestaurantService : IRestaurantService
 
             return restaurantDtos;
         }
-        catch (Exception e)
+        catch (Exception ex)
         {
-            
-            _logger.LogError(e.Message);
-            _logger.LogUnauthorizedAttempt(e.Message);
+            // Log an error with an exception
+            _logger.LogToFile(LogLevel.Error, "Something went wrong.", ex);
+
+            // Log a debug message
+            _logger.LogToFile(LogLevel.Debug, "Debugging information.");
+
+            // Log an information message
+            _logger.LogToFile(LogLevel.Information, "Application started.");
+
+            // Log a warning
+            _logger.LogToFile(LogLevel.Warning, "Potential issue detected.");
             throw;
         }
     }
