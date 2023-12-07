@@ -17,7 +17,7 @@ namespace Restaurant.Test
 
         public RestaurantServiceUnitTests()
         {
-            _restaurantService = new RestaurantService(_readRepoMock.Object, _repoMock.Object);
+            _restaurantService = new RestaurantService(_readRepoMock.Object, _repoMock.Object, null);
         }
 
 

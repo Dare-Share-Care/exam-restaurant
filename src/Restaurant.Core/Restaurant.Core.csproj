@@ -17,6 +17,7 @@
     <ItemGroup>
       <PackageReference Include="HotChocolate" Version="14.0.0-p.15" />
       <PackageReference Include="HotChocolate.AspNetCore" Version="14.0.0-p.15" />
+      <PackageReference Include="Microsoft.Extensions.Logging" Version="7.0.0" />
     </ItemGroup>
 
 </Project>
