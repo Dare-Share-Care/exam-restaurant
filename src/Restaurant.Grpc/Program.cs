@@ -18,6 +18,7 @@ builder.Services.AddDbContext<RestaurantContext>(options =>
 
 //Build services
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+builder.Services.AddScoped<ILoggingService, LoggingService>();
 
 //Build repositories
 builder.Services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
