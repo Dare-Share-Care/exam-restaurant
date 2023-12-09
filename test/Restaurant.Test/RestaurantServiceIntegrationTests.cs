@@ -26,7 +26,7 @@ namespace Restaurant.Test
 
             _dbContext = _serviceProvider.GetRequiredService<RestaurantContext>();
         }
- 
+  
         [Fact]
         public async Task GetAllRestaurantsAsync_ShouldReturnAllRestaurants()
         {
