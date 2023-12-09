@@ -15,9 +15,7 @@ namespace Restaurant.Grpc.Services
             ServerCallContext context)
         {
             // Fetch the restaurants
-            var restaurants = await _restaurantService.GetAllRestaurantsAsync();
-            // Find the restaurant matching the request
-            var restaurant = restaurants.FirstOrDefault(r => r.Id == request.RestaurantId);
+            var restaurant = await _restaurantService.GetRestaurantById(request.RestaurantId);
             
             // Get menu 
             var menu = await _restaurantService.GetRestaurantMenuAsync(request.RestaurantId);

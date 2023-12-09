@@ -9,7 +9,8 @@ public interface IRestaurantService
      Task<List<MenuItemDto>> GetRestaurantMenuAsync(long restaurantId);
      Task<RestaurantDto> AddMenuItemAsync(long restaurantId, CreateMenuItemDto dto);
      Task<RestaurantDto> RemoveMenuItemAsync(long restaurantId, long menuItemId);
-     Task<List<RestaurantDto>> GetAllRestaurantsAsync();
+     Task<List<RestaurantViewModel>> GetAllRestaurantsAsync();
      Task<CreateMenuItemDto> UpdateMenuItemAsync(long restaurantId, long menuItemId, CreateMenuItemDto dto);
 
+     Task<RestaurantDto> GetRestaurantById(long restaurantId);
 }

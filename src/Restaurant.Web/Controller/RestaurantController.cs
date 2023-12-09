@@ -22,13 +22,7 @@ namespace Restaurant.Web.Controller;
         public async Task<IActionResult> GetAllRestaurants()
         {
             var restaurants = await _restaurantService.GetAllRestaurantsAsync();
-            //Map to viewmodel
-            var model = restaurants.Select(restaurant => new RestaurantDto()
-            {
-                Id = restaurant.Id,
-                Name = restaurant.Name
-            }).ToList();
-            return Ok(model);
+            return Ok(restaurants);
         }
         
         //Get menu for a restaurant

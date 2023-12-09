@@ -152,13 +152,13 @@ public class RestaurantService : IRestaurantService
     }
 
 
-    public async Task<List<RestaurantDto>> GetAllRestaurantsAsync()
+    public async Task<List<RestaurantViewModel>> GetAllRestaurantsAsync()
     {
         try
         {
             
             var restaurants = await _restaurantReadRepository.ListAsync();
-            var restaurantDtos = restaurants.Select(restaurant => new RestaurantDto
+            var restaurantViewModels = restaurants.Select(restaurant => new RestaurantViewModel
             {
                 Id = restaurant.Id,
                 Name = restaurant.Name,
@@ -167,7 +167,7 @@ public class RestaurantService : IRestaurantService
             }).ToList();
 
 
-            return restaurantDtos;
+            return restaurantViewModels;
         }
         catch (Exception ex)
         {
@@ -186,6 +186,31 @@ public class RestaurantService : IRestaurantService
         }
     }
 
+    public async Task<RestaurantDto> GetRestaurantById(long restaurantId)
+    {
+     
+        var order =  await _restaurantReadRepository.FirstOrDefaultAsync(new GetRestaurantWithMenuItemsSpec(restaurantId));
+        if (order is null)
+        {
+            throw new RestaurantException($"Restaurant with id {restaurantId} not found");
+        }
+        
+        var restaurantDto = new RestaurantDto
+        {
+            Id = order.Id,
+            Name = order.Name,
+            Address = order.Address,
+            Zipcode = order.Zipcode,
+            Menu = order.Menu.Select(item => new MenuItemDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Price = item.Price,
+                Description = item.Description
+            }).ToList()
+        };
+        return restaurantDto;
+    }
     
 
     public async Task<CreateMenuItemDto> UpdateMenuItemAsync(long restaurantId, long menuItemId, CreateMenuItemDto dto)
