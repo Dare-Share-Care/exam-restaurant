@@ -7,7 +7,7 @@ using Restaurant.Test.CustomFactories;
 using Restaurant.Test.Helpers;
 using TechTalk.SpecFlow;
 
-namespace Restaurant.Test.Steps;
+namespace Restaurant.Test.Tests.ApiTestsSteps;
 
 [Binding]
 public class GetAllMenuItemsStep

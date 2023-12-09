@@ -7,7 +7,7 @@ using Restaurant.Core.Services;
 using Restaurant.Infrastructure.Entities;
 using Restaurant.Infrastructure.Interfaces;
 
-namespace Restaurant.Test
+namespace Restaurant.Test.Tests.UnitTests
 {
     public class RestaurantServiceUnitTests
     {

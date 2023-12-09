@@ -156,7 +156,6 @@ public class RestaurantService : IRestaurantService
     {
         try
         {
-            
             var restaurants = await _restaurantReadRepository.ListAsync();
             var restaurantViewModels = restaurants.Select(restaurant => new RestaurantViewModel
             {
@@ -172,16 +171,7 @@ public class RestaurantService : IRestaurantService
         catch (Exception ex)
         {
             // Log an error with an exception
-            _logger.LogToFile(LogLevel.Error, "Something went wrong.", ex);
-
-            // Log a debug message
-            _logger.LogToFile(LogLevel.Debug, "Debugging information.");
-
-            // Log an information message
-            _logger.LogToFile(LogLevel.Information, "Application started.");
-
-            // Log a warning
-            _logger.LogToFile(LogLevel.Warning, "Potential issue detected.");
+            await _logger.LogToFile(LogLevel.Error, "Something went wrong.", ex);
             throw;
         }
     }

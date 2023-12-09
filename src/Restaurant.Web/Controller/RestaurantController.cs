@@ -33,6 +33,7 @@ namespace Restaurant.Web.Controller;
             return Ok(menu);
         }
 
+        
         [HttpPost("create-restaurant")]
         public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantDto dto)
         {
@@ -40,9 +41,8 @@ namespace Restaurant.Web.Controller;
             return Ok(restaurant);
         }
 
-
+        [Authorize(Roles = "RestaurantOwner")]
         [HttpPost("create-menuitem/{restaurantId}")]
-        //[Authorize(Roles = "RestaurantOwner")]
         public async Task<IActionResult> AddMenuItem(long restaurantId, [FromBody] CreateMenuItemDto dto)
         {
             var restaurant = await _restaurantService.AddMenuItemAsync(restaurantId, dto);

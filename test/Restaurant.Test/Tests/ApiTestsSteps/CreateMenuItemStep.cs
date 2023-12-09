@@ -10,7 +10,7 @@ using Restaurant.Test.CustomFactories;
 using Restaurant.Test.Helpers;
 using TechTalk.SpecFlow;
 
-namespace Restaurant.Test.Steps;
+namespace Restaurant.Test.Tests.ApiTestsSteps;
 
 [Binding]
 public class CreateMenuItemStep
@@ -31,8 +31,8 @@ public class CreateMenuItemStep
         // Create a client to send requests to the test server representing the user
         _client = _factory.CreateClient();
         
-        //Add authentication logic here
-        
+        //Mock JWT token
+        _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + JwtTokenHelper.GetRestaurantOwnerJwtToken());
     }
 
     [Given(@"a restaurant already exists in the system")]
