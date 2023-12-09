@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Restaurant.Core.Interfaces;
-using Restaurant.Core.Models.ViewModels;
 using Restaurant.Core.Services;
 using Restaurant.Core.Types;
 using Restaurant.Infrastructure.Data;
@@ -23,6 +22,7 @@ builder.Services.AddCors(options =>
         builder =>
         {
             builder
+                .AllowAnyOrigin() 
                 .AllowAnyMethod()
                 .AllowAnyHeader();
         });
