@@ -25,88 +25,114 @@ public class RestaurantService : IRestaurantService
 
     public async Task<RestaurantViewModel> CreateRestaurantAsync(CreateRestaurantDto dto)
     {
-        var createdRestaurant = await _restaurantRepository.AddAsync(new Restauranten
+        try
         {
-            Name = dto.Name,
-            Address = dto.Address,
-            Zipcode = dto.Zipcode
-        });
+            var createdRestaurant = await _restaurantRepository.AddAsync(new Restauranten
+            {
+                Name = dto.Name,
+                Address = dto.Address,
+                Zipcode = dto.Zipcode
+            });
 
-        var restaurantDto = new RestaurantViewModel()
+            var restaurantViewModel = new RestaurantViewModel()
+            {
+                Id = createdRestaurant.Id,
+                Name = createdRestaurant.Name,
+                Address = createdRestaurant.Address,
+                Zipcode = createdRestaurant.Zipcode
+            };
+            return restaurantViewModel;
+        }
+        catch (Exception ex)
         {
-            Id = createdRestaurant.Id,
-            Name = createdRestaurant.Name,
-            Address = createdRestaurant.Address,
-            Zipcode = createdRestaurant.Zipcode
-        };
-        return restaurantDto;
+            await _logger.LogToFile(LogLevel.Error, "Something went wrong trying to create a restaurant.", ex);
+            throw;
+        }
+       
     }
 
 
     public async Task<List<MenuItemDto>> GetRestaurantMenuAsync(long restaurantId)
     {
-        var restaurant =
-            await _restaurantReadRepository.FirstOrDefaultAsync(new GetRestaurantWithMenuItemsSpec(restaurantId));
-        if (restaurant is null)
+        try
         {
-            throw new Exception($"Restaurant with id {restaurantId} not found");
+            var restaurant =
+                await _restaurantReadRepository.FirstOrDefaultAsync(new GetRestaurantWithMenuItemsSpec(restaurantId));
+            if (restaurant is null)
+            {
+                throw new Exception($"Restaurant with id {restaurantId} not found");
+            }
+
+            var menu = restaurant.Menu.Select(menuItem => new MenuItemDto
+            {
+                Id = menuItem.Id,
+                Name = menuItem.Name,
+                Price = menuItem.Price,
+                Description = menuItem.Description
+            }).ToList();
+
+            return menu;
         }
-
-        var menu = restaurant.Menu.Select(menuItem => new MenuItemDto
+        catch (Exception ex)
         {
-            Id = menuItem.Id,
-            Name = menuItem.Name,
-            Price = menuItem.Price,
-            Description = menuItem.Description
-        }).ToList();
-
-        return menu;
+            await _logger.LogToFile(LogLevel.Error, "Something went wrong trying to get the menu for a restaurant.", ex);
+            throw;
+        }
     }
 
 
 
     public async Task<RestaurantDto> AddMenuItemAsync(long restaurantId, CreateMenuItemDto dto)
     {
-        //Get the restaurant we want to add the menu item to
-        var restaurant =
-            await _restaurantRepository.FirstOrDefaultAsync(new GetRestaurantWithMenuItemsSpec(restaurantId));
-
-        if (restaurant is null)
+        try
         {
-            throw new RestaurantException($"Restaurant with id {restaurantId} not found");
-        }
+            //Get the restaurant we want to add the menu item to
+            var restaurant =
+                await _restaurantRepository.FirstOrDefaultAsync(new GetRestaurantWithMenuItemsSpec(restaurantId));
 
-        // Create a new menu item
-        var menuItem = new MenuItem
-        {
-            Name = dto.Name,
-            Price = dto.Price,
-            Description = dto.Description
-        };
-
-        // Add the menu item to the restaurant
-        restaurant.Menu.Add(menuItem);
-
-        // Update the restaurant
-        await _restaurantRepository.UpdateAsync(restaurant);
-
-        // Return the updated restaurant to reflect the new menu
-        var restaurantDto = new RestaurantDto
-        {
-            Id = restaurant.Id,
-            Name = restaurant.Name,
-            Address = restaurant.Address,
-            Zipcode = restaurant.Zipcode,
-            Menu = restaurant.Menu.Select(item => new MenuItemDto
+            if (restaurant is null)
             {
-                Id = item.Id,
-                Name = item.Name,
-                Price = item.Price,
-                Description = item.Description
-            }).ToList()
-        };
+                throw new RestaurantException($"Restaurant with id {restaurantId} not found");
+            }
 
-        return restaurantDto;
+            // Create a new menu item
+            var menuItem = new MenuItem
+            {
+                Name = dto.Name,
+                Price = dto.Price,
+                Description = dto.Description
+            };
+
+            // Add the menu item to the restaurant
+            restaurant.Menu.Add(menuItem);
+
+            // Update the restaurant
+            await _restaurantRepository.UpdateAsync(restaurant);
+
+            // Return the updated restaurant to reflect the new menu
+            var restaurantDto = new RestaurantDto
+            {
+                Id = restaurant.Id,
+                Name = restaurant.Name,
+                Address = restaurant.Address,
+                Zipcode = restaurant.Zipcode,
+                Menu = restaurant.Menu.Select(item => new MenuItemDto
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Price = item.Price,
+                    Description = item.Description
+                }).ToList()
+            };
+
+            return restaurantDto;
+        
+        }
+        catch (Exception ex)
+        {
+            await _logger.LogToFile(LogLevel.Error, "Something went wrong trying to add a menu item to a restaurant.", ex);
+            throw;
+        }
     }
 
 
@@ -114,41 +140,42 @@ public class RestaurantService : IRestaurantService
 
     public async Task<RestaurantDto> RemoveMenuItemAsync(long restaurantId, long menuItemId)
     {
-        //Get the restaurant we want to remove the menu item from
-        var restaurant =
-            await _restaurantRepository.FirstOrDefaultAsync(new GetRestaurantWithMenuItemsSpec(restaurantId));
-        if (restaurant is null)
-        {
-            throw new RestaurantException($"Restaurant with id {restaurantId} not found");
-        }
-
-        //Remove the menu item from the restaurant
-        var menuItem = restaurant.Menu.FirstOrDefault(x => x.Id == menuItemId);
-        if (menuItem is null)
-        {
-            throw new RestaurantException($"Menu item with id {menuItemId} not found");
-        }
-
-        restaurant.Menu.Remove(menuItem);
-
-        //Update the restaurant
-        await _restaurantRepository.UpdateAsync(restaurant);
-
-
-        //Return the updated restaurant to reflect the new menu
-        var restaurantDto = new RestaurantDto
-        {
-            Id = restaurant.Id,
-            Name = restaurant.Name,
-            Menu = restaurant.Menu.Select(item => new MenuItemDto
+       
+            //Get the restaurant we want to remove the menu item from
+            var restaurant =
+                await _restaurantRepository.FirstOrDefaultAsync(new GetRestaurantWithMenuItemsSpec(restaurantId));
+            if (restaurant is null)
             {
-                Id = item.Id,
-                Name = item.Name,
-                Price = item.Price
-            }).ToList()
-        };
+                throw new RestaurantException($"Restaurant with id {restaurantId} not found");
+            }
 
-        return restaurantDto;
+            //Remove the menu item from the restaurant
+            var menuItem = restaurant.Menu.FirstOrDefault(x => x.Id == menuItemId);
+            if (menuItem is null)
+            {
+                throw new RestaurantException($"Menu item with id {menuItemId} not found");
+            }
+
+            restaurant.Menu.Remove(menuItem);
+
+            //Update the restaurant
+            await _restaurantRepository.UpdateAsync(restaurant);
+
+
+            //Return the updated restaurant to reflect the new menu
+            var restaurantDto = new RestaurantDto
+            {
+                Id = restaurant.Id,
+                Name = restaurant.Name,
+                Menu = restaurant.Menu.Select(item => new MenuItemDto
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Price = item.Price
+                }).ToList()
+            };
+
+            return restaurantDto;
     }
 
 
@@ -178,65 +205,81 @@ public class RestaurantService : IRestaurantService
 
     public async Task<RestaurantDto> GetRestaurantById(long restaurantId)
     {
-     
-        var order =  await _restaurantReadRepository.FirstOrDefaultAsync(new GetRestaurantWithMenuItemsSpec(restaurantId));
-        if (order is null)
+        try
         {
-            throw new RestaurantException($"Restaurant with id {restaurantId} not found");
-        }
-        
-        var restaurantDto = new RestaurantDto
-        {
-            Id = order.Id,
-            Name = order.Name,
-            Address = order.Address,
-            Zipcode = order.Zipcode,
-            Menu = order.Menu.Select(item => new MenuItemDto
+            var order =  await _restaurantReadRepository.FirstOrDefaultAsync(new GetRestaurantWithMenuItemsSpec(restaurantId));
+            if (order is null)
             {
-                Id = item.Id,
-                Name = item.Name,
-                Price = item.Price,
-                Description = item.Description
-            }).ToList()
-        };
-        return restaurantDto;
+                throw new RestaurantException($"Restaurant with id {restaurantId} not found");
+            }
+        
+            var restaurantDto = new RestaurantDto
+            {
+                Id = order.Id,
+                Name = order.Name,
+                Address = order.Address,
+                Zipcode = order.Zipcode,
+                Menu = order.Menu.Select(item => new MenuItemDto
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Price = item.Price,
+                    Description = item.Description
+                }).ToList()
+            };
+            return restaurantDto;
+        
+        }
+        catch (Exception ex)
+        {
+            await _logger.LogToFile(LogLevel.Error, "Something went wrong trying to get a restaurant by id.", ex);
+            throw;
+        }
     }
     
 
     public async Task<CreateMenuItemDto> UpdateMenuItemAsync(long restaurantId, long menuItemId, CreateMenuItemDto dto)
     {
-        //Get the restaurant we want to update the menu item from
-        var restaurant =
-            await _restaurantRepository.FirstOrDefaultAsync(new GetRestaurantWithMenuItemsSpec(restaurantId));
-        if (restaurant is null)
+        try
         {
-            throw new RestaurantException($"Restaurant with id {restaurantId} not found");
+            //Get the restaurant we want to update the menu item from
+            var restaurant =
+                await _restaurantRepository.FirstOrDefaultAsync(new GetRestaurantWithMenuItemsSpec(restaurantId));
+            if (restaurant is null)
+            {
+                throw new RestaurantException($"Restaurant with id {restaurantId} not found");
+            }
+
+            //Update the menu item from the restaurant
+            var menuItem = restaurant.Menu.FirstOrDefault(x => x.Id == menuItemId);
+            if (menuItem is null)
+            {
+                throw new RestaurantException($"Menu item with id {menuItemId} not found");
+            }
+
+            menuItem.Name = dto.Name;
+            menuItem.Price = dto.Price;
+            menuItem.Description = dto.Description;
+
+            //Update the restaurant
+            await _restaurantRepository.UpdateAsync(restaurant);
+
+            //Return the updated restaurant to reflect the new menu
+        
+            var updatedMenuItem = new CreateMenuItemDto
+            {
+                Name = menuItem.Name,
+                Price = menuItem.Price,
+                Description = menuItem.Description
+            };
+        
+            return updatedMenuItem;
+            
         }
-
-        //Update the menu item from the restaurant
-        var menuItem = restaurant.Menu.FirstOrDefault(x => x.Id == menuItemId);
-        if (menuItem is null)
+        catch (Exception ex)
         {
-            throw new RestaurantException($"Menu item with id {menuItemId} not found");
+            await _logger.LogToFile(LogLevel.Error, "Something went wrong trying to update a menu item from a restaurant.", ex);
+            throw;
         }
-
-        menuItem.Name = dto.Name;
-        menuItem.Price = dto.Price;
-        menuItem.Description = dto.Description;
-
-        //Update the restaurant
-        await _restaurantRepository.UpdateAsync(restaurant);
-
-        //Return the updated restaurant to reflect the new menu
-        
-        var updatedMenuItem = new CreateMenuItemDto
-        {
-            Name = menuItem.Name,
-            Price = menuItem.Price,
-            Description = menuItem.Description
-        };
-        
-        return updatedMenuItem;
-        
     }
 }

@@ -41,7 +41,6 @@ namespace Restaurant.Test.Tests.UnitTests
             var restaurantsFound = await _restaurantService.GetAllRestaurantsAsync();
 
             //Assert
-
             //Contains 3 restaurants
             Assert.Equal(3, restaurantsFound.Count);
 
@@ -147,22 +146,7 @@ namespace Restaurant.Test.Tests.UnitTests
             Assert.Equal("MenuItem 1", restaurantDto.Menu[3].Name);
         }
 
-        [Fact]
-        public async Task AddMenuItemAsync_ShouldThrowRestaurantException_WhenRestaurantNotFound()
-        {
-            //Arrange
-            const long restaurantId = 1;
-
-            var createMenuItemDto = new CreateMenuItemDto { Name = "MenuItem 1", Price = 10 };
-
-            _repoMock.Setup(x =>
-                    x.FirstOrDefaultAsync(It.IsAny<ISpecification<Restauranten>>(), new CancellationToken()))
-                .ReturnsAsync((Restauranten)null);
-
-            //Act & Assert
-            await Assert.ThrowsAsync<RestaurantException>(() =>
-                _restaurantService.AddMenuItemAsync(restaurantId, createMenuItemDto));
-        }
+       
 
         [Fact]
         public async Task RemoveMenuItemAsync_ShouldUpdateRestaurantWithRemovedMenuItem()

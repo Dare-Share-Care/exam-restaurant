@@ -17,7 +17,7 @@ namespace Restaurant.Web.Controller;
             _restaurantService = restaurantService;
         }
 
-        
+        [Authorize(Roles = "Customer, RestaurantOwner")]
         [HttpGet("get-all-restaurants")]
         public async Task<IActionResult> GetAllRestaurants()
         {
@@ -26,6 +26,7 @@ namespace Restaurant.Web.Controller;
         }
         
         //Get menu for a restaurant
+        [Authorize(Roles = "Customer, RestaurantOwner")]
         [HttpGet("{restaurantId}/menu")]
         public async Task<IActionResult> GetRestaurantMenu(long restaurantId)
         {
@@ -34,6 +35,7 @@ namespace Restaurant.Web.Controller;
         }
 
         
+        [Authorize(Roles = "Admin")]
         [HttpPost("create-restaurant")]
         public async Task<IActionResult> CreateRestaurant([FromBody] CreateRestaurantDto dto)
         {

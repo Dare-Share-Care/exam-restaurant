@@ -23,6 +23,9 @@ public class GetAllMenuItemsStep
         _factory = factory;
     }
     
+   
+   
+    
     [Given(@"A restaurant exists in the system")]
     public void GivenARestaurantAlreadyExistsInTheSystem()
     {
@@ -47,14 +50,21 @@ public class GetAllMenuItemsStep
         context.MenuItems.AddRange(menuItems);
         context.SaveChanges();
     }
+    
+    [Given(@"A customer is logged in,")]
+    public void GivenACustomerIsLoggedIn()
+    {
+            // Create a client to send requests to the test server representing the user
+            _client = _factory.CreateClient();
+        
+            //Mock JWT token
+            _client.DefaultRequestHeaders.Add("Authorization", "Bearer " + JwtTokenHelper.GetCustomerJwtToken());
+    }
 
     [When(@"the user accesses a given restaurant,")]
     public async Task WhenTheUserAccessesTheAGivenRestaurant()
     {
-        var restaurantId = 1; 
-        var requestUri = "/api/restaurant/1/menu"; 
-        _client = _factory.CreateClient();
-        _response = await _client.GetAsync(requestUri);
+        _response = await _client.GetAsync("/api/restaurant/1/menu");
     }
 
     [Then(@"they should see the list of all existing menu items\.")]
@@ -79,4 +89,5 @@ public class GetAllMenuItemsStep
         // Add more assertions as needed
     }
 
+    
 }

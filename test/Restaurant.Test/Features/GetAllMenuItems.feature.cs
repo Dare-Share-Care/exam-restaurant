@@ -113,9 +113,12 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.AndAsync("Menu item exists in the system,", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 8
- await testRunner.WhenAsync("the user accesses a given restaurant,", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ await testRunner.AndAsync("A customer is logged in,", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 9
+ await testRunner.WhenAsync("the user accesses a given restaurant,", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 10
  await testRunner.ThenAsync("they should see the list of all existing menu items.", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
