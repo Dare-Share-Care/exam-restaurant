@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: src/Restaurant.Grpc/Dockerfile
     ports:
-      - "8082:80"  
+      - "8000:8000"
     networks:
       - kafka
 
