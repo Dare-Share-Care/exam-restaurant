@@ -47,8 +47,9 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 //ILogger
 builder.Services.AddLogging();
 
-// JWT Configuration
-var key = Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!);
+//JWT Key
+// var key = Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"]!);
+var key = Encoding.UTF8.GetBytes("super_secret_key"); //TODO above doesn't work with docker.
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
