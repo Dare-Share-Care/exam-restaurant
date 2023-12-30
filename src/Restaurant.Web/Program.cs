@@ -71,12 +71,6 @@ options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
     // Add more policies for other roles as needed
 });
 
-//graphql
-builder.Services
-    .AddGraphQLServer()
-    .AddQueryType<QueryType>();
-
-
 var app = builder.Build();
 app.UseStaticFiles();
 app.UseSwagger();
@@ -88,8 +82,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapGraphQL("/graphql");
-
 app.Run();
-
 public partial class Program { }

@@ -71,5 +71,4 @@ namespace Restaurant.Web.Controller;
                 return BadRequest(new { ErrorMessage = ex.Message });
             }
         }
-
 }
