@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Prometheus;
 using Restaurant.Core.Interfaces;
 using Restaurant.Core.Services;
 using Restaurant.Core.Types;
@@ -77,8 +78,18 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseCors(policyName);
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+
+app.UseMetricServer();
+app.UseHttpMetrics();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.MapControllers();
 
